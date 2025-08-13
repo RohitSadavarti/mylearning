@@ -1,3 +1,5 @@
+/* Sidebar-only CSS - Responsive for Desktop and Mobile */
+
 /* Sidebar Styles */
 .sidebar {
     position: fixed;
@@ -117,24 +119,25 @@
     visibility: visible;
 }
 
-/* Header Styles for Sidebar */
+/* Header Controls */
 .header {
     position: relative;
 }
 
 .menu-toggle {
     position: absolute;
-    top: 1rem;
-    left: 1rem;
+    top: 10px;
+    left: 10px;
     background: rgba(255, 255, 255, 0.9);
     border: none;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 4px;
+    padding: 8px;
+    border-radius: 8px;
     transition: all 0.3s;
     z-index: 1001;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    backdrop-filter: blur(10px);
 }
 
 .menu-toggle:hover {
@@ -150,8 +153,8 @@ body.sidebar-open .menu-toggle {
 
 .user-profile {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 10px;
+    right: 10px;
     z-index: 1001;
 }
 
@@ -209,4 +212,87 @@ body.sidebar-open .menu-toggle {
 
 .dropdown-item:last-child {
     border-bottom: none;
+}
+
+/* Responsive Design */
+@media (min-width: 769px) {
+    /* Desktop styles */
+    .menu-toggle {
+        top: 20px;
+        left: 20px;
+        font-size: 1.5rem;
+        padding: 12px;
+    }
+    
+    .user-profile {
+        top: 20px;
+        right: 20px;
+    }
+    
+    .profile-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+    }
+    
+    .header {
+        padding-top: 30px;
+    }
+    
+    .sidebar {
+        width: 300px;
+        left: -300px;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Mobile styles */
+    .menu-toggle {
+        top: 10px;
+        left: 10px;
+        font-size: 1.2rem;
+        padding: 8px;
+    }
+    
+    .user-profile {
+        top: 10px;
+        right: 10px;
+    }
+    
+    .profile-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    
+    .sidebar {
+        width: 280px;
+        left: -280px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Extra small mobile */
+    .sidebar {
+        width: 250px;
+        left: -250px;
+    }
+    
+    .menu-toggle {
+        top: 8px;
+        left: 8px;
+        font-size: 1.1rem;
+        padding: 6px;
+    }
+    
+    .user-profile {
+        top: 8px;
+        right: 8px;
+    }
+    
+    .profile-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 1.1rem;
+    }
 }
