@@ -34,16 +34,20 @@
                 </div>
             </div>
             
-            <div class="sidebar-nav">
-                <div class="nav-item" onclick="openAlgorithms()">
-                    <span class="nav-icon">🌳</span>
-                    Tree Traversal Algorithms
-                </div>
-                <div class="nav-item active" onclick="openCipher()">
-                    <span class="nav-icon">🔐</span>
-                    Cipher Encryption Visualizer
-                </div>
-            </div>
+    <div class="sidebar-nav">
+        <div class="nav-item active" onclick="openAlgorithms(); setActiveNavItem(this);">
+            <span class="nav-icon">🌳</span>
+            Tree Traversal Algorithms
+        </div>
+        <div class="nav-item" onclick="openCipher(); setActiveNavItem(this);">
+            <span class="nav-icon">🔐</span>
+            Cipher Encryption Visualizer
+        </div>
+        <div class="nav-item" onclick="goToHome(); setActiveNavItem(this);">
+            <span class="nav-icon">🏠</span>
+            Dashboard Home
+        </div>
+    </div>
             
             <div class="sidebar-footer">
                 <button class="logout-btn">
