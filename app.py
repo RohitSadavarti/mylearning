@@ -54,6 +54,9 @@ def not_found(error):
     return "Page not found!", 404
 
 if __name__ == '__main__':
+    # Get port from environment variable for Render deployment
+    port = int(os.environ.get('PORT', 5000))
+    
     # Check if all required directories exist
     required_dirs = [
         'algosearch',
@@ -94,9 +97,9 @@ if __name__ == '__main__':
         print("        └── js/")
         print("            └── script.js")
     
-    print("Starting Flask server...")
-    print("Dashboard will be available at: http://localhost:5000")
-    print("Algorithm Search at: http://localhost:5000/algosearch")
-    print("Cipher Visualizer at: http://localhost:5000/cipher")
+    print(f"Starting Flask server on port {port}...")
+    print("Dashboard will be available at the deployed URL")
     
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # For production deployment (like Render), disable debug mode
+    debug_mode = os.environ.get('FLASK_ENV') == 'development'
+    app.run(debug=debug_mode, host='0.0.0.0', port=port)
