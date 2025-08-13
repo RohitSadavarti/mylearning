@@ -43,6 +43,7 @@ function toggleSidebar() {
     if (sidebar && overlay) {
         sidebar.classList.toggle('active');
         overlay.classList.toggle('active');
+        document.body.classList.toggle('sidebar-open');
     }
 }
 
@@ -53,6 +54,7 @@ function closeSidebar() {
     if (sidebar && overlay) {
         sidebar.classList.remove('active');
         overlay.classList.remove('active');
+        document.body.classList.remove('sidebar-open');
     }
 }
 
