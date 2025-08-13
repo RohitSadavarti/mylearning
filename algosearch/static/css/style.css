@@ -25,6 +25,7 @@ body {
 .header {
     text-align: center;
     margin-bottom: 20px;
+    position: relative;
 }
 
 .title {
@@ -328,4 +329,177 @@ body {
     font-size: 14px;
     align-self: center;
     min-width: 90px;
+}
+
+/* Responsive Design for Desktop and Mobile */
+@media (min-width: 769px) {
+    /* Desktop styles */
+    body {
+        padding: 40px;
+    }
+    
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        align-items: start;
+    }
+    
+    .header {
+        grid-column: 1 / -1;
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 40px 20px 20px;
+    }
+    
+    .title {
+        font-size: 32px;
+        margin-top: 20px;
+    }
+    
+    .score {
+        font-size: 20px;
+        padding: 12px 25px;
+    }
+    
+    .controls {
+        grid-column: 1;
+        margin-bottom: 0;
+    }
+    
+    .tree-container {
+        grid-column: 2;
+        grid-row: 2 / 5;
+        min-height: 600px;
+        max-height: 700px;
+    }
+    
+    .path-display {
+        grid-column: 1 / -1;
+        margin-top: 20px;
+    }
+    
+    .algorithm-info {
+        grid-column: 1;
+        margin-bottom: 0;
+    }
+    
+    .controls-btn {
+        grid-column: 1 / -1;
+        margin-top: 20px;
+        gap: 20px;
+    }
+    
+    .btn {
+        padding: 18px 25px;
+        font-size: 20px;
+        min-width: 80px;
+    }
+    
+    .tree-config {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .config-title {
+        font-size: 18px;
+    }
+    
+    .config-input {
+        padding: 10px 15px;
+        font-size: 16px;
+    }
+    
+    .generate-btn {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+    
+    .dropdown {
+        padding: 15px;
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    
+    .search-input {
+        padding: 15px;
+        font-size: 18px;
+    }
+    
+    .search-btn {
+        padding: 15px 25px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Mobile styles - maintain existing design */
+    .container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    .header {
+        margin-bottom: 20px;
+    }
+    
+    .title {
+        font-size: 24px;
+    }
+    
+    .score {
+        font-size: 18px;
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Extra small mobile */
+    body {
+        padding: 15px;
+    }
+    
+    .container {
+        padding: 15px;
+        border-radius: 15px;
+    }
+    
+    .title {
+        font-size: 20px;
+    }
+    
+    .score {
+        font-size: 16px;
+        padding: 8px 16px;
+    }
+    
+    .tree-container {
+        min-height: 300px;
+        max-height: 400px;
+        padding: 15px;
+    }
+    
+    .config-row {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .generate-btn {
+        width: 100%;
+        padding: 10px 15px;
+    }
+    
+    .controls-btn {
+        gap: 10px;
+    }
+    
+    .btn {
+        padding: 12px;
+        font-size: 16px;
+        min-width: 50px;
+    }
 }
