@@ -5,7 +5,7 @@
     top: 0;
     width: 300px;
     height: 100vh;
-    background:  linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    background: white;
     box-shadow: 2px 0 10px rgba(0,0,0,0.1);
     transition: left 0.3s ease;
     z-index: 999;
@@ -24,7 +24,7 @@
 .user-info {
     text-align: center;
     padding-bottom: 1rem;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .user-avatar {
@@ -55,11 +55,13 @@
     transition: all 0.3s;
     display: flex;
     align-items: center;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .nav-item:hover {
-    background-color: #f8f9ff;
+    background-color: rgba(255, 255, 255, 0.1);
     border-right: 3px solid #667eea;
+    color: white;
 }
 
 .nav-item.active {
@@ -83,7 +85,7 @@
     padding: 12px 2rem;
     background: none;
     border: none;
-    color: #dc3545;
+    color: #ff6b6b;
     cursor: pointer;
     text-align: left;
     transition: all 0.3s;
@@ -92,7 +94,8 @@
 }
 
 .logout-btn:hover {
-    background-color: #ffe6e6;
+    background-color: rgba(255, 107, 107, 0.1);
+    color: #ff5252;
 }
 
 /* Overlay */
