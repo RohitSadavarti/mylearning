@@ -4,14 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Algorithm Learning Visualizer</title>
+    <link rel="stylesheet" href="algosidebar.css">
     <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
     <div class="container">
         <div class="header">
+            <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
             <div class="title">🌳 Algorithm Visualizer</div>
             <div class="score">Step: <span id="stepCount">0</span></div>
+            <div class="user-profile">
+                <button class="profile-btn" onclick="toggleProfileDropdown()">👤</button>
+                <div class="profile-dropdown" id="profileDropdown">
+                    <div class="dropdown-item">⚙️ Settings</div>
+                    <div class="dropdown-item">🔐 Login</div>
+                    <div class="dropdown-item" style="color: #dc3545;">🚪 Logout</div>
+                </div>
+            </div>
         </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="user-info">
+                    <div class="user-avatar">R</div>
+                    <div class="user-name">Rohit Sadavarti</div>
+                </div>
+            </div>
+            
+            <div class="sidebar-nav">
+                <div class="nav-item active" onclick="goToAlgorithms()">
+                    <span class="nav-icon">🌳</span>
+                    Tree Traversal Algorithms
+                </div>
+                <div class="nav-item" onclick="goToCipher()">
+                    <span class="nav-icon">🔐</span>
+                    Cipher Encryption Visualizer
+                </div>
+            </div>
+            
+            <div class="sidebar-footer">
+                <button class="logout-btn">
+                    <span class="nav-icon">🚪</span>
+                    Logout
+                </button>
+            </div>
+        </div>
+
+        <!-- Overlay -->
+        <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+        
             <select class="dropdown" id="algorithmSelect" onchange="updateAlgorithmInfo()">
                 <optgroup label="Tree Traversal">
                     <option value="preorder">Pre-order Traversal</option>
@@ -85,6 +127,7 @@
         </div>
     </div>
 
+<script src="algosidebar.js"></script>
 <script src="static/js/script.js"></script>
 </body>
 </html>
