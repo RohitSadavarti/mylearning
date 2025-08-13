@@ -79,7 +79,7 @@ function openCipher() {
     showMessage('Loading Cipher Encryption Visualizer...', 'info');
     // Add small delay for better UX
     setTimeout(() => {
-        window.location.href = '/cipher';
+        window.location.href = './cipher/index.html';
     }, 300);
 }
 
