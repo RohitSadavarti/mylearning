@@ -105,7 +105,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);;
+    background: rgba(0,0,0,0.5);
     z-index: 998;
     opacity: 0;
     visibility: hidden;
