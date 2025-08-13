@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm Learning Visualizer</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title">🌳 Algorithm Visualizer</div>
+            <div class="score">Step: <span id="stepCount">0</span></div>
+        </div>
+            <select class="dropdown" id="algorithmSelect" onchange="updateAlgorithmInfo()">
+                <optgroup label="Tree Traversal">
+                    <option value="preorder">Pre-order Traversal</option>
+                    <option value="inorder">In-order Traversal</option>
+                    <option value="postorder">Post-order Traversal</option>
+                    <option value="bfs">Breadth-First Search (BFS)</option>
+                </optgroup>
+                <optgroup label="Search Algorithms">
+                    <option value="dfs">Depth-First Search (DFS)</option>
+                    <option value="bst">Binary Search Tree Search</option>
+                    <option value="dls">Depth-Limited Search</option>
+                    <option value="iddfs">Iterative Deepening DFS</option>
+                </optgroup>
+                <optgroup label="Informed Search">
+                    <option value="ucs">Uniform Cost Search</option>
+                    <option value="astar">A* Search</option>
+                    <option value="greedy">Greedy Best-First Search</option>
+                </optgroup>
+            </select>
+        <div class="controls">
+            <div class="tree-config">
+                <div class="config-title">Tree Configuration</div>
+                <div class="config-row">
+                    <input type="number" class="config-input" id="treeLevels" placeholder="Levels (2-10)" min="2" max="10" value="3">
+                    <input type="number" class="config-input" id="nodeCount" placeholder="Total nodes (3-50)" min="3" max="50" value="7">
+                    <button class="generate-btn" onclick="generateCustomTree()">Generate</button>
+                </div>
+                <div class="config-row">
+                    <input type="number" class="config-input" id="maxChildren" placeholder="Max children per node (2-5)" min="2" max="5" value="2">
+                    <button class="generate-btn" onclick="generateRandomTree()">Random Tree</button>
+                </div>
+                <div class="config-row" id="depthLimitContainer" style="display: none;">
+                    <span class="depth-label">Depth Limit:</span>
+                    <input type="number" class="config-input" id="depthLimit" min="1" max="10" value="3" style="max-width: 120px;">
+                </div>
+                <div class="tree-info" id="treeInfo">
+                    <div class="tree-info-title">Current Tree:</div>
+                    <div class="tree-info-details">3 levels, 7 nodes</div>
+                    <div class="tree-info-details">Nodes: A, B, C, D, E, F, G</div>
+                </div>
+            </div>
+
+
+
+            <div class="input-container">
+                <input type="text" class="search-input" id="searchValue" placeholder="Enter value to search" maxlength="3">
+                <button class="search-btn" onclick="startVisualization()">Start</button>
+            </div>
+        </div>
+
+        <div class="status" id="status">Configure tree and select algorithm</div>
+
+        <div class="path-display">
+            <div class="path-label">Traversal Path:</div>
+            <div class="path-text" id="pathDisplay">Path will appear here...</div>
+        </div>
+
+        <div class="tree-container">
+            <svg class="tree-svg" id="treeSvg"></svg>
+        </div>
+
+        <div class="algorithm-info" id="algorithmInfo">
+            <div class="info-title">Algorithm Information</div>
+            <div id="infoContent">Select an algorithm to see details</div>
+        </div>
+
+        <div class="controls-btn">
+            <button class="btn" onclick="resetVisualization()">🔄</button>
+            <button class="btn" onclick="pausePlay()" id="pauseBtn">⏸️</button>
+            <button class="btn" onclick="stepForward()">⏭️</button>
+        </div>
+    </div>
+
+<script src="static/js/script.js"></script>
+</body>
+</html>
