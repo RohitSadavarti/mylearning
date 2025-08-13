@@ -5,7 +5,7 @@
     top: 0;
     width: 300px;
     height: 100vh;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    background: white;
     box-shadow: 2px 0 10px rgba(0,0,0,0.1);
     transition: left 0.3s ease;
     z-index: 999;
@@ -15,6 +15,7 @@
 .sidebar.active {
     left: 0;
 }
+
 .sidebar-header {
     padding: 0 2rem;
     margin-bottom: 2rem;
@@ -30,7 +31,7 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    background: #667eea;
     color: white;
     display: flex;
     align-items: center;
@@ -41,7 +42,7 @@
 
 .user-name {
     font-weight: 600;
-    color: white;
+    color: #333;
 }
 
 .sidebar-nav {
@@ -122,7 +123,7 @@
     position: absolute;
     top: 1rem;
     left: 1rem;
-    background:  rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.9);
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
@@ -173,7 +174,7 @@ body.sidebar-open .menu-toggle {
     position: absolute;
     top: 50px;
     right: 0;
-    background: white;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
     border-radius: 8px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.15);
     min-width: 200px;
@@ -193,12 +194,14 @@ body.sidebar-open .menu-toggle {
 .dropdown-item {
     padding: 12px 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
-    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.3s;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
 }
 
 .dropdown-item:hover {
-    background-color: #f8f9ff;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
 }
 
 .dropdown-item:last-child {
