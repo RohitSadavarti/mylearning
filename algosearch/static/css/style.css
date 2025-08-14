@@ -48,6 +48,7 @@ body {
     margin-bottom: 20px;
 }
 
+/* Tree Configuration - Updated Layout */
 .tree-config {
     background: rgba(0, 0, 0, 0.3);
     border-radius: 15px;
@@ -62,14 +63,26 @@ body {
     margin-bottom: 10px;
 }
 
+/* New horizontal layout for config inputs */
 .config-row {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* Three equal columns */
     gap: 10px;
     margin-bottom: 10px;
+    align-items: center;
+}
+
+/* First row: 3 inputs, Generate button */
+.config-row:first-of-type {
+    grid-template-columns: 1fr 1fr 1fr; /* Keep as three columns for first row */
+}
+
+/* Second row: 2 input, Random Tree button */
+.config-row:nth-of-type(2) {
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
 }
 
 .config-input {
-    flex: 1;
     padding: 8px 12px;
     border-radius: 8px;
     border: none;
@@ -77,6 +90,7 @@ body {
     color: white;
     font-size: 14px;
     backdrop-filter: blur(10px);
+    width: 100%;
 }
 
 .config-input::placeholder {
@@ -93,6 +107,7 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 14px;
+    width: 100%;
 }
 
 .generate-btn:hover {
@@ -408,6 +423,15 @@ body {
         font-size: 18px;
     }
     
+    .config-row {
+        grid-template-columns: 1fr 1fr 1fr; /* Three columns on desktop */
+        gap: 15px;
+    }
+    
+    .config-row:nth-of-type(2) {
+        grid-template-columns: 1fr 1fr; /* Two columns for second row */
+    }
+    
     .config-input {
         padding: 10px 15px;
         font-size: 16px;
@@ -484,13 +508,27 @@ body {
     }
     
     .config-row {
-        flex-direction: column;
+        grid-template-columns: 1fr 1fr; /* Two columns on very small screens */
         gap: 8px;
+    }
+    
+    .config-row:first-of-type {
+        grid-template-columns: 1fr 1fr; /* Two columns for small screens */
+    }
+    
+    .config-row:nth-of-type(2) {
+        grid-template-columns: 1fr; /* Single column for second row on small screens */
     }
     
     .generate-btn {
         width: 100%;
         padding: 10px 15px;
+        font-size: 13px;
+    }
+    
+    .config-input {
+        padding: 10px 12px;
+        font-size: 13px;
     }
     
     .controls-btn {
