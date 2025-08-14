@@ -71,7 +71,7 @@ function openAlgorithms() {
     showMessage('Loading Tree Traversal Algorithms...', 'info');
     // Add small delay for better UX
     setTimeout(() => {
-        window.location.href = './algosearch/index.htnl';
+        window.location.href = '/algosearch';
     }, 300);
 }
 
@@ -81,7 +81,7 @@ function openCipher() {
     showMessage('Loading Cipher Encryption Visualizer...', 'info');
     // Add small delay for better UX
     setTimeout(() => {
-        window.location.href = './cipher/index.html';
+        window.location.href = '/cipher';
     }, 300);
 }
 
