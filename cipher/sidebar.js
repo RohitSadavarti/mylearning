@@ -66,21 +66,21 @@ function toggleProfileDropdown() {
     }
 }
 
-// Navigation functions - Match HTML function names
+// Navigation functions - Fixed with absolute paths
 function openAlgorithms() {
     showMessage('Loading Tree Traversal Algorithms...', 'info');
     // Add small delay for better UX
     setTimeout(() => {
+        // Use absolute path from root
         window.location.href = '/algosearch';
     }, 300);
 }
-
-
 
 function openCipher() {
     showMessage('Loading Cipher Encryption Visualizer...', 'info');
     // Add small delay for better UX
     setTimeout(() => {
+        // Use absolute path from root
         window.location.href = '/cipher';
     }, 300);
 }
@@ -88,6 +88,7 @@ function openCipher() {
 function goToHome() {
     showMessage('Going to Dashboard...', 'info');
     setTimeout(() => {
+        // Use absolute path from root
         window.location.href = '/';
     }, 300);
 }
