@@ -8,24 +8,26 @@ app = Flask(__name__)
 def dashboard():
     return send_file('index.html')
 
-# Route for algorithm search page
+# Route for algorithm search page - with and without trailing slash
 @app.route('/algosearch')
+@app.route('/algosearch/')
 def algosearch():
     return send_file('algosearch/index.html')
 
-# Route for cipher page
+# Route for cipher page - with and without trailing slash  
 @app.route('/cipher')
+@app.route('/cipher/')
 def cipher():
     return send_file('cipher/index.html')
 
-# NEW ROUTES FOR CROSS-NAVIGATION FROM SUBPAGES
-# Route for algosearch to cipher navigation
+# Cross-navigation routes - also with trailing slashes
 @app.route('/algosearch/cipher')
+@app.route('/algosearch/cipher/')
 def algosearch_to_cipher():
     return send_file('cipher/index.html')
 
-# Route for cipher to algosearch navigation  
 @app.route('/cipher/algosearch')
+@app.route('/cipher/algosearch/')
 def cipher_to_algosearch():
     return send_file('algosearch/index.html')
 
