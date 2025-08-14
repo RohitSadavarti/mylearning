@@ -63,25 +63,7 @@ body {
     margin-bottom: 10px;
 }
 
-/* First row: 3 items in horizontal layout */
-.config-row:first-of-type {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 10px;
-    align-items: center;
-}
-
-/* Second row: 2 items in horizontal layout */
-.config-row:nth-of-type(2) {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 10px;
-    align-items: center;
-}
-
-/* Default config-row for any other rows */
+/* All config rows use flex layout */
 .config-row {
     display: flex;
     gap: 10px;
@@ -431,15 +413,7 @@ body {
     }
     
     /* Desktop: Keep the same horizontal layout */
-    .config-row:first-of-type {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 15px;
-    }
-    
-    .config-row:nth-of-type(2) {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
+    .config-row {
         gap: 15px;
     }
     
@@ -492,15 +466,7 @@ body {
     }
     
     /* Ensure horizontal layout on mobile too */
-    .config-row:first-of-type {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr 1fr !important;
-        gap: 10px;
-    }
-    
-    .config-row:nth-of-type(2) {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr !important;
+    .config-row {
         gap: 10px;
     }
 }
@@ -532,15 +498,7 @@ body {
     }
     
     /* Keep the horizontal layout even on very small screens */
-    .config-row:first-of-type {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr 1fr !important;
-        gap: 8px;
-    }
-    
-    .config-row:nth-of-type(2) {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr !important;
+    .config-row {
         gap: 8px;
     }
     
