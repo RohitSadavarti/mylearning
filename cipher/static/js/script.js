@@ -17,13 +17,14 @@
                 invented: "Named after Julius Caesar (1st century BC)"
             },
             atbash: {
-                name: "Atbash Cipher",
-                description: "A substitution cipher where A↔Z, B↔Y, C↔X, etc. The alphabet is reversed.",
-                keyFormat: "No key required",
-                example: "HELLO → SVOOL",
-                strength: "Weak - monoalphabetic substitution",
-                invented: "Ancient Hebrew cipher (600-500 BC)"
+                name: "Monoalphabetic Cipher",
+                description: "A substitution cipher where each plaintext letter is replaced with a fixed, unique ciphertext letter. Mapping can be random or systematic.",
+                keyFormat: "Key is the substitution alphabet (e.g., C: QWERTYUIOPASDFGHJKLZXCVBNM)",
+                example: "HELLO → ITSSG (using C: QWERTYUIOPASDFGHJKLZXCVBNM)",
+                strength: "Weak - vulnerable to frequency analysis",
+                invented: "Used since ancient times, popular in classical cryptography"
             },
+
             substitution: {
                 name: "Simple Substitution",
                 description: "Each letter is replaced by another letter according to a fixed system.",
