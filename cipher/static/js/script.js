@@ -760,8 +760,9 @@ for (let i = 0; i < text.length; i++) {
     outputRow.children[i].classList.add('decrypted');
     
     result += newChar;
+    }
+    return result;
 }
-
 // Hill Cipher Animation (2x2 matrix)
 async function animateHill(text, key, isEncrypt) {
     const keyNumbers = key.split(',').map(x => parseInt(x.trim()));
