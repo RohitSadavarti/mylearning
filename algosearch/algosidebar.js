@@ -66,30 +66,31 @@ function toggleProfileDropdown() {
     }
 }
 
-// Navigation functions - Match HTML function calls
+// Navigation functions - Fixed with absolute paths
 function openAlgorithms() {
     showMessage('Loading Algorithm Visualizer...', 'info');
     // Add small delay for better UX
     setTimeout(() => {
-         window.location.href = '/algosearch';
-    }, 500);
+        // Use absolute path from root
+        window.location.href = '/algosearch';
+    }, 300);
 }
 
 function openCipher() {
     showMessage('Loading Cipher Visualizer...', 'info');
     // Add small delay for better UX
     setTimeout(() => {
+        // Use absolute path from root
         window.location.href = '/cipher';
-    }, 500);
+    }, 300);
 }
-
-
 
 function goToHome() {
     showMessage('Going to Dashboard...', 'info');
     setTimeout(() => {
+        // Use absolute path from root
         window.location.href = '/';
-    }, 500);
+    }, 300);
 }
 
 // Handle logout
@@ -125,51 +126,67 @@ function showMessage(message, type = 'info') {
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
     notification.innerHTML = `
-        <span>${message}</span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <span>${getNotificationIcon(type)}</span>
+            <span>${message}</span>
+        </div>
         <button onclick="this.parentElement.remove()" style="
             background: none; 
             border: none; 
             color: white; 
-            margin-left: 10px; 
+            margin-left: 15px; 
             cursor: pointer;
-            font-size: 16px;
+            font-size: 18px;
+            font-weight: bold;
         ">×</button>
     `;
     
-    const bgColor = type === 'error' ? '#dc3545' : 
-                   type === 'success' ? '#28a745' : 
-                   type === 'warning' ? '#ffc107' : '#667eea';
+    const bgColor = getNotificationColor(type);
     
     notification.style.cssText = `
         position: fixed;
         top: 20px;
         right: 20px;
-        padding: 12px 20px;
+        padding: 16px 20px;
         background: ${bgColor};
         color: white;
-        border-radius: 8px;
+        border-radius: 12px;
         z-index: 9999;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.2);
         display: flex;
         align-items: center;
         justify-content: space-between;
-        min-width: 200px;
-        animation: slideIn 0.3s ease-out;
+        min-width: 250px;
+        max-width: 400px;
+        animation: slideInRight 0.3s ease-out;
+        backdrop-filter: blur(10px);
     `;
     
-    // Add animation keyframes
+    // Add animation styles if not already added
     if (!document.querySelector('#notification-styles')) {
         const style = document.createElement('style');
         style.id = 'notification-styles';
         style.textContent = `
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
+            @keyframes slideInRight {
+                from { 
+                    transform: translateX(100%); 
+                    opacity: 0; 
+                }
+                to { 
+                    transform: translateX(0); 
+                    opacity: 1; 
+                }
             }
-            @keyframes slideOut {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
+            @keyframes slideOutRight {
+                from { 
+                    transform: translateX(0); 
+                    opacity: 1; 
+                }
+                to { 
+                    transform: translateX(100%); 
+                    opacity: 0; 
+                }
             }
         `;
         document.head.appendChild(style);
@@ -179,13 +196,37 @@ function showMessage(message, type = 'info') {
     
     // Auto remove notification after 4 seconds
     setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s ease-out';
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
-            }
-        }, 300);
+        if (notification.parentNode) {
+            notification.style.animation = 'slideOutRight 0.3s ease-out';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }
     }, 4000);
+}
+
+// Helper function to get notification icon
+function getNotificationIcon(type) {
+    switch(type) {
+        case 'error': return '❌';
+        case 'success': return '✅';
+        case 'warning': return '⚠️';
+        case 'info': 
+        default: return 'ℹ️';
+    }
+}
+
+// Helper function to get notification color
+function getNotificationColor(type) {
+    switch(type) {
+        case 'error': return 'linear-gradient(135deg, #dc3545 0%, #c82333 100%)';
+        case 'success': return 'linear-gradient(135deg, #28a745 0%, #1e7e34 100%)';
+        case 'warning': return 'linear-gradient(135deg, #ffc107 0%, #e0a800 100%)';
+        case 'info': 
+        default: return 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+    }
 }
 
 // Handle navigation clicks with better feedback
@@ -243,3 +284,17 @@ document.addEventListener('touchend', function(event) {
     touchStartX = null;
     touchStartY = null;
 });
+
+// Add loading state management
+function setLoadingState(isLoading) {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const profileBtn = document.querySelector('.profile-btn');
+    
+    if (isLoading) {
+        if (menuToggle) menuToggle.style.pointerEvents = 'none';
+        if (profileBtn) profileBtn.style.pointerEvents = 'none';
+    } else {
+        if (menuToggle) menuToggle.style.pointerEvents = 'auto';
+        if (profileBtn) profileBtn.style.pointerEvents = 'auto';
+    }
+}
