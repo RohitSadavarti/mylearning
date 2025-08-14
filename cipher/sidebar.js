@@ -72,7 +72,7 @@ function openAlgorithms() {
     // Add small delay for better UX
     setTimeout(() => {
         // Use absolute path from root
-        window.location.href = '/algosearch';
+        window.location.href = '/algosearch/';
     }, 300);
 }
 
@@ -81,7 +81,7 @@ function openCipher() {
     // Add small delay for better UX
     setTimeout(() => {
         // Use absolute path from root
-        window.location.href = '/cipher';
+        window.location.href = '/cipher/';
     }, 300);
 }
 
