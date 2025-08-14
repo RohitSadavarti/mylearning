@@ -705,6 +705,7 @@ async function animateBeaufort(text, key, isEncrypt) {
         keyBox.style.backgroundColor = '#444';
         if (char.match(/[A-Za-z]/)) {
             keyBox.textContent = upperKey[keyIndex % upperKey.length];
+            keyIndex++;
         } else {
             keyBox.textContent = '-';
         }
@@ -722,46 +723,43 @@ async function animateBeaufort(text, key, isEncrypt) {
     
     await sleep(animationSpeed);
     
-    keyIndex = 0;
-    for (let i = 0; i < text.length; i++) {
-        const char = text[i];
-        let newChar = char;
+keyIndex = 0;
+for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    let newChar = char;
+    
+    if (char.match(/[A-Za-z]/)) {
+        const isUpper = char === char.toUpperCase();
+        const base = isUpper ? 65 : 97;
+        const charCode = char.charCodeAt(0) - base;
+        const keyChar = upperKey[keyIndex % upperKey.length];
+        const keyCode = keyChar.charCodeAt(0) - 65;
         
-        if (char.match(/[A-Za-z]/)) {
-            const isUpper = char === char.toUpperCase();
-            const base = isUpper ? 65 : 97;
-            const charCode = char.charCodeAt(0) - base;
-            const keyChar = upperKey[keyIndex % upperKey.length];
-            const keyCode = keyChar.charCodeAt(0) - 65;
-            
-            let shiftedCode;
-            if (isEncrypt) {
-                shiftedCode = (keyCode - charCode + 26) % 26;
-            } else {
-                shiftedCode = (keyCode - charCode + 26) % 26;
-            }
-            
-            newChar = String.fromCharCode(shiftedCode + base);
-            keyIndex++;
+        let shiftedCode;
+        if (isEncrypt) {
+            shiftedCode = (keyCode - charCode + 26) % 26;
+        } else {
+            shiftedCode = (keyCode - charCode + 26) % 26;
         }
         
-        inputRow.children[i].classList.add('processing');
-        keyRow.children[i].classList.add('processing');
-        currentStep++;
-        document.getElementById('stepCount').textContent = currentStep;
-        
-        await sleep(animationSpeed / 2);
-        
-        inputRow.children[i].classList.remove('processing');
-        inputRow.children[i].classList.add('encrypted');
-        keyRow.children[i].classList.remove('processing');
-        outputRow.children[i].textContent = newChar;
-        outputRow.children[i].classList.add('decrypted');
-        
-        result += newChar;
+        newChar = String.fromCharCode(shiftedCode + base);
+        keyIndex++;
     }
     
-    return result;
+    inputRow.children[i].classList.add('processing');
+    keyRow.children[i].classList.add('processing');
+    currentStep++;
+    document.getElementById('stepCount').textContent = currentStep;
+    
+    await sleep(animationSpeed / 2);
+    
+    inputRow.children[i].classList.remove('processing');
+    inputRow.children[i].classList.add('encrypted');
+    keyRow.children[i].classList.remove('processing');
+    outputRow.children[i].textContent = newChar;
+    outputRow.children[i].classList.add('decrypted');
+    
+    result += newChar;
 }
 
 // Hill Cipher Animation (2x2 matrix)
