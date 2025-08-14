@@ -64,31 +64,46 @@
                     <div class="section-title">⚙️ Cipher Selection</div>
                     
                     <div class="input-group">
-                        <label class="input-label">Cipher Technique:</label>
-                        <select class="cipher-select" id="cipherSelect" onchange="updateCipherInfo()">
-                            <optgroup label="Substitution Ciphers">
-                                <option value="caesar">Caesar Cipher</option>
-                                <option value="atbash">Mono-alphabetic Cipher</option>
-                                <option value="substitution">Simple Substitution</option>
-                                <option value="affine">Affine Cipher</option>
-                            </optgroup>
-                            <optgroup label="Transposition Ciphers">
-                                <option value="columnar">Columnar Transposition</option>
-                                <option value="rail_fence">Rail Fence Cipher</option>
-                                <option value="scytale">Scytale Cipher</option>
-                            </optgroup>
-                            <optgroup label="Polyalphabetic Ciphers">
-                                <option value="vigenere">Vigenère Cipher</option>
-                                <option value="playfair">Playfair Cipher</option>
-                                <option value="beaufort">Beaufort Cipher</option>
-                            </optgroup>
-                            <optgroup label="Modern Techniques">
-                                <option value="xor">XOR Cipher</option>
-                                <option value="base64">Base64 Encoding</option>
-                                <option value="morse">Morse Code</option>
-                            </optgroup>
-                        </select>
-                    </div>
+                <label class="input-label">Cipher Technique:</label>
+                <select class="cipher-select" id="cipherSelect" onchange="updateCipherInfo()">
+                    <optgroup label="Classical Substitution">
+                        <option value="caesar">Caesar Cipher</option>
+                        <option value="atbash">Atbash Cipher</option>
+                        <option value="substitution">Simple Substitution</option>
+                        <option value="affine">Affine Cipher</option>
+                    </optgroup>
+                    <optgroup label="Polyalphabetic">
+                        <option value="vigenere">Vigenère Cipher</option>
+                        <option value="playfair">Playfair Cipher</option>
+                        <option value="beaufort">Beaufort Cipher</option>
+                        <option value="hill">Hill Cipher</option>
+                    </optgroup>
+                    <optgroup label="Transposition">
+                        <option value="columnar">Columnar Transposition</option>
+                        <option value="rail_fence">Rail Fence Cipher</option>
+                        <option value="scytale">Scytale Cipher</option>
+                        <option value="route">Route Cipher</option>
+                    </optgroup>
+                    <optgroup label="Modern Symmetric">
+                        <option value="des">DES (Data Encryption Standard)</option>
+                        <option value="triple_des">Triple DES</option>
+                        <option value="aes">AES (Advanced Encryption Standard)</option>
+                        <option value="feistel">Feistel Network</option>
+                        <option value="stream">Stream Cipher (RC4)</option>
+                    </optgroup>
+                    <optgroup label="Asymmetric (Public Key)">
+                        <option value="rsa">RSA</option>
+                        <option value="diffie_hellman">Diffie-Hellman Key Exchange</option>
+                        <option value="ecc">Elliptic Curve Cryptography</option>
+                    </optgroup>
+                    <optgroup label="Special Techniques">
+                        <option value="one_time_pad">One-Time Pad</option>
+                        <option value="xor">XOR Cipher</option>
+                        <option value="base64">Base64 Encoding</option>
+                        <option value="morse">Morse Code</option>
+                    </optgroup>
+                </select>
+            </div>
 
         <div class="controls">
                 <div class="input-section">
