@@ -71,7 +71,7 @@ function openAlgorithms() {
     showMessage('Loading Algorithm Visualizer...', 'info');
     // Add small delay for better UX
     setTimeout(() => {
-         window.location.href = './algosearch/index.html';
+         window.location.href = '/algosearch';
     }, 500);
 }
 
@@ -79,7 +79,7 @@ function openCipher() {
     showMessage('Loading Cipher Visualizer...', 'info');
     // Add small delay for better UX
     setTimeout(() => {
-        window.location.href = './cipher/index.html';
+        window.location.href = '/cipher';
     }, 500);
 }
 
