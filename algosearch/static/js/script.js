@@ -7,6 +7,7 @@ let currentStep = 0;
 let isRunning = false;
 let isPaused = false;
 let intervalId = null;
+let heuristicValues = {};
 
 // Generate node labels
 function generateNodeLabels(count) {
@@ -118,7 +119,10 @@ function buildFlexibleTree(labels, maxLevels, maxChildren) {
             y: y,
             children: [],
             level: level,
-            cost: Math.floor(Math.random() * 10) + 1
+            cost: Math.floor(Math.random() * 10) + 1,
+            gCost: 0,
+            hCost: 0,
+            fCost: 0
         };
     }
 
@@ -183,7 +187,10 @@ function buildRandomTree(labels, maxLevels, maxChildren) {
             y: y,
             children: [],
             level: level,
-            cost: Math.floor(Math.random() * 10) + 1
+            cost: Math.floor(Math.random() * 10) + 1,
+            gCost: 0,
+            hCost: 0,
+            fCost: 0
         };
     }
 
@@ -230,6 +237,49 @@ function getAllNodes(node, nodes = []) {
         node.children.forEach(child => getAllNodes(child, nodes));
     }
     return nodes;
+}
+
+// Calculate heuristic (Manhattan distance based on level and position)
+function calculateHeuristic(node, target, allNodes) {
+    const targetNode = allNodes.find(n => n.value === target);
+    if (!targetNode) return 0;
+    
+    // Enhanced heuristic: level difference + position difference + random factor
+    const levelDiff = Math.abs(node.level - targetNode.level) * 2;
+    const posDiff = Math.abs(node.x - targetNode.x) / 50;
+    const verticalDiff = Math.abs(node.y - targetNode.y) / 50;
+    
+    return Math.round(levelDiff + posDiff + verticalDiff);
+}
+
+// Update heuristic table display
+function updateHeuristicTable(target) {
+    const heuristicTable = document.getElementById('heuristicTable');
+    const heuristicGrid = document.getElementById('heuristicGrid');
+    
+    if (currentAlgorithm === 'astar' || currentAlgorithm === 'greedy') {
+        heuristicTable.classList.add('show');
+        
+        const allNodes = getAllNodes(currentTree);
+        heuristicGrid.innerHTML = '';
+        
+        // Calculate and store heuristic values
+        heuristicValues = {};
+        allNodes.forEach(node => {
+            const hValue = calculateHeuristic(node, target, allNodes);
+            heuristicValues[node.value] = hValue;
+            
+            const item = document.createElement('div');
+            item.className = 'heuristic-item';
+            item.innerHTML = `
+                <div class="node-name">${node.value}</div>
+                <div class="h-value">h = ${hValue}</div>
+            `;
+            heuristicGrid.appendChild(item);
+        });
+    } else {
+        heuristicTable.classList.remove('show');
+    }
 }
 
 // Algorithm information
@@ -362,6 +412,20 @@ function drawEdges(node, svg, parent = null) {
         line.setAttribute('class', 'edge');
         line.setAttribute('id', `edge-${parent.value}-${node.value}`);
         svg.appendChild(line);
+        
+        // Add edge cost label for informed search algorithms
+        if (currentAlgorithm === 'astar' || currentAlgorithm === 'ucs') {
+            const midX = (parent.x + node.x) / 2;
+            const midY = (parent.y + node.y) / 2;
+            
+            const costText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            costText.setAttribute('x', midX);
+            costText.setAttribute('y', midY - 5);
+            costText.setAttribute('class', 'edge-cost');
+            costText.textContent = node.cost;
+            costText.setAttribute('id', `cost-${parent.value}-${node.value}`);
+            svg.appendChild(costText);
+        }
     }
     
     if (node.children) {
@@ -381,7 +445,7 @@ function drawNodes(node, svg) {
     const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
     circle.setAttribute('cx', node.x);
     circle.setAttribute('cy', node.y);
-    circle.setAttribute('r', 20);
+    circle.setAttribute('r', 25);
     
     const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
     text.setAttribute('x', node.x);
@@ -390,6 +454,35 @@ function drawNodes(node, svg) {
     
     group.appendChild(circle);
     group.appendChild(text);
+    
+    // Add g(n) and h(n) values for A* algorithm
+    if (currentAlgorithm === 'astar') {
+        const gText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        gText.setAttribute('x', node.x - 15);
+        gText.setAttribute('y', node.y + 35);
+        gText.setAttribute('class', 'cost-text');
+        gText.setAttribute('id', `g-${node.value}`);
+        gText.textContent = `g:${node.gCost}`;
+        group.appendChild(gText);
+        
+        const hText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        hText.setAttribute('x', node.x + 15);
+        hText.setAttribute('y', node.y + 35);
+        hText.setAttribute('class', 'cost-text');
+        hText.setAttribute('id', `h-${node.value}`);
+        hText.textContent = `h:${node.hCost}`;
+        group.appendChild(hText);
+        
+        const fText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        fText.setAttribute('x', node.x);
+        fText.setAttribute('y', node.y + 45);
+        fText.setAttribute('class', 'cost-text');
+        fText.setAttribute('id', `f-${node.value}`);
+        fText.textContent = `f:${node.fCost}`;
+        fText.style.fill = '#8b5cf6';
+        group.appendChild(fText);
+    }
+    
     svg.appendChild(group);
     
     if (node.children) {
@@ -397,6 +490,17 @@ function drawNodes(node, svg) {
             drawNodes(child, svg);
         });
     }
+}
+
+// Update node cost displays during A* visualization
+function updateNodeCosts(node, gCost, hCost) {
+    const gElement = document.getElementById(`g-${node.value}`);
+    const hElement = document.getElementById(`h-${node.value}`);
+    const fElement = document.getElementById(`f-${node.value}`);
+    
+    if (gElement) gElement.textContent = `g:${gCost}`;
+    if (hElement) hElement.textContent = `h:${hCost}`;
+    if (fElement) fElement.textContent = `f:${gCost + hCost}`;
 }
 
 // Algorithm implementations
@@ -624,17 +728,6 @@ function iterativeDeepeningDFS(root, target) {
     return path;
 }
 
-// Calculate heuristic (Manhattan distance based on level)
-function calculateHeuristic(node, target, allNodes) {
-    const targetNode = allNodes.find(n => n.value === target);
-    if (!targetNode) return 0;
-    
-    // Simple heuristic: level difference + position difference
-    const levelDiff = Math.abs(node.level - targetNode.level);
-    const posDiff = Math.abs(node.x - targetNode.x) / 100;
-    return levelDiff + posDiff;
-}
-
 // Uniform Cost Search
 function uniformCostSearch(root, target) {
     const path = [];
@@ -676,26 +769,44 @@ function uniformCostSearch(root, target) {
     return path;
 }
 
-// A* Search
+// A* Search with enhanced visualization
 function astarSearch(root, target) {
     const path = [];
     const allNodes = getAllNodes(root);
+    
+    // Initialize all nodes with their heuristic values
+    allNodes.forEach(node => {
+        node.hCost = calculateHeuristic(node, target, allNodes);
+        node.gCost = node === root ? 0 : Infinity;
+        node.fCost = node.gCost + node.hCost;
+    });
+    
     const frontier = [{
-        node: root, 
-        gCost: 0, 
-        hCost: calculateHeuristic(root, target, allNodes),
-        fCost: calculateHeuristic(root, target, allNodes)
+        node: root,
+        gCost: 0,
+        hCost: root.hCost,
+        fCost: root.hCost,
+        parent: null
     }];
     const visited = new Set();
     
     while (frontier.length > 0) {
-        // Sort by f-cost (g + h)
-        frontier.sort((a, b) => a.fCost - b.fCost);
+        // Sort by f-cost (g + h), then by h-cost as tiebreaker
+        frontier.sort((a, b) => {
+            if (a.fCost !== b.fCost) return a.fCost - b.fCost;
+            return a.hCost - b.hCost;
+        });
+        
         const current = frontier.shift();
         
         if (visited.has(current.node.value)) continue;
         
         visited.add(current.node.value);
+        
+        // Update node costs
+        current.node.gCost = current.gCost;
+        current.node.fCost = current.fCost;
+        
         const found = current.node.value === target;
         
         path.push({
@@ -704,7 +815,8 @@ function astarSearch(root, target) {
             found: found,
             gCost: current.gCost,
             hCost: current.hCost,
-            fCost: current.fCost
+            fCost: current.fCost,
+            nodeObj: current.node
         });
         
         if (found) break;
@@ -712,13 +824,21 @@ function astarSearch(root, target) {
         if (current.node.children) {
             current.node.children.forEach(child => {
                 if (!visited.has(child.value)) {
-                    const gCost = current.gCost + child.cost;
+                    const tentativeGCost = current.gCost + child.cost;
                     const hCost = calculateHeuristic(child, target, allNodes);
+                    const fCost = tentativeGCost + hCost;
+                    
+                    // Update child costs
+                    child.gCost = Math.min(child.gCost, tentativeGCost);
+                    child.hCost = hCost;
+                    child.fCost = child.gCost + child.hCost;
+                    
                     frontier.push({
                         node: child,
-                        gCost: gCost,
+                        gCost: tentativeGCost,
                         hCost: hCost,
-                        fCost: gCost + hCost
+                        fCost: fCost,
+                        parent: current.node
                     });
                 }
             });
@@ -805,6 +925,12 @@ function startVisualization() {
     // Reset visualization first
     resetVisualization(false);
     
+    // Update heuristic table for A* and Greedy
+    updateHeuristicTable(searchTarget);
+    
+    // Re-initialize tree to show cost values for A*
+    initializeTree();
+    
     // Generate traversal path based on selected algorithm
     switch (currentAlgorithm) {
         case 'preorder':
@@ -856,7 +982,7 @@ function startVisualization() {
     // Start immediately with first step, then continue with interval
     setTimeout(() => {
         stepForward();
-        intervalId = setInterval(stepForward, 1200);
+        intervalId = setInterval(stepForward, 1500);
     }, 500);
 }
 
@@ -875,6 +1001,11 @@ function stepForward() {
         return;
     }
     
+    // Update A* cost values on the graph
+    if (currentAlgorithm === 'astar' && step.nodeObj) {
+        updateNodeCosts(step.nodeObj, step.gCost, step.hCost);
+    }
+    
     // Update node appearance
     if (step.found) {
         nodeElement.classList.add('target');
@@ -886,12 +1017,26 @@ function stepForward() {
         setTimeout(() => {
             nodeElement.classList.remove('current');
             nodeElement.classList.add('visited');
-        }, 800);
+        }, 1000);
     }
     
-    // Update path display
-    const pathNodes = traversalPath.slice(0, currentStep + 1).map(s => s.node).join(' → ');
-    document.getElementById('pathDisplay').textContent = pathNodes;
+    // Update path display with cost information for informed search
+    let pathText = '';
+    if (currentAlgorithm === 'astar') {
+        const pathNodes = traversalPath.slice(0, currentStep + 1).map(s => 
+            `${s.node}(f:${s.fCost})`
+        ).join(' → ');
+        pathText = pathNodes;
+    } else if (currentAlgorithm === 'ucs') {
+        const pathNodes = traversalPath.slice(0, currentStep + 1).map(s => 
+            `${s.node}(${s.cost || 0})`
+        ).join(' → ');
+        pathText = pathNodes;
+    } else {
+        pathText = traversalPath.slice(0, currentStep + 1).map(s => s.node).join(' → ');
+    }
+    
+    document.getElementById('pathDisplay').textContent = pathText;
     
     // Update step counter
     document.getElementById('stepCount').textContent = currentStep + 1;
@@ -903,7 +1048,7 @@ function stepForward() {
         setTimeout(() => {
             document.getElementById('status').textContent = `Completed traversal - ${searchTarget} not found`;
             document.getElementById('status').className = 'status error';
-        }, 900);
+        }, 1100);
     }
 }
 
@@ -913,7 +1058,7 @@ function pausePlay() {
     if (isPaused) {
         isPaused = false;
         document.getElementById('pauseBtn').textContent = '⏸️';
-        intervalId = setInterval(stepForward, 1000);
+        intervalId = setInterval(stepForward, 1500);
     } else {
         isPaused = true;
         document.getElementById('pauseBtn').textContent = '▶️';
@@ -941,6 +1086,9 @@ function resetVisualization(clearInput = true) {
     document.getElementById('pathDisplay').textContent = 'Path will appear here...';
     document.getElementById('stepCount').textContent = '0';
     
+    // Hide heuristic table
+    document.getElementById('heuristicTable').classList.remove('show');
+    
     if (clearInput) {
         document.getElementById('searchValue').value = '';
         document.getElementById('status').textContent = 'Configure tree and select algorithm';
@@ -949,6 +1097,11 @@ function resetVisualization(clearInput = true) {
     
     currentStep = 0;
     traversalPath = [];
+    
+    // Re-initialize tree to remove cost displays
+    if (currentTree) {
+        initializeTree();
+    }
 }
 
 function updateAlgorithmInfo() {
@@ -968,12 +1121,20 @@ function updateAlgorithmInfo() {
     if (depthContainer) {
         depthContainer.style.display = currentAlgorithm === 'dls' ? 'flex' : 'none';
     }
+    
+    // Hide heuristic table when not using informed search
+    if (currentAlgorithm !== 'astar' && currentAlgorithm !== 'greedy') {
+        document.getElementById('heuristicTable').classList.remove('show');
+    }
 }
 
 // Event listeners
 document.getElementById('algorithmSelect').addEventListener('change', function() {
     currentAlgorithm = this.value;
     updateAlgorithmInfo();
+    if (currentTree) {
+        initializeTree(); // Re-draw to show/hide cost labels
+    }
 });
 
 document.getElementById('searchValue').addEventListener('keypress', function(e) {
