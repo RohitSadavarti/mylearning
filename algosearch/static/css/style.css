@@ -232,6 +232,14 @@ body {
     dominant-baseline: middle;
 }
 
+/* A* Cost Text Styles */
+.node .cost-text {
+    font-size: 10px;
+    fill: #fbbf24;
+    font-weight: bold;
+    font-family: monospace;
+}
+
 .edge {
     stroke: #4ade80;
     stroke-width: 2;
@@ -242,6 +250,59 @@ body {
     stroke: #fbbf24;
     stroke-width: 3;
     animation: flow 2s infinite;
+}
+
+/* Edge Cost Labels for A* and UCS */
+.edge-cost {
+    font-family: monospace;
+    font-size: 10px;
+    fill: #60a5fa;
+    text-anchor: middle;
+    dominant-baseline: middle;
+}
+
+/* A* Heuristic Table */
+.heuristic-table {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 20px;
+    display: none;
+}
+
+.heuristic-table.show {
+    display: block;
+}
+
+.heuristic-table h3 {
+    color: #4ade80;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.heuristic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.heuristic-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.heuristic-item .node-name {
+    font-weight: bold;
+    color: #60a5fa;
+    margin-bottom: 4px;
+}
+
+.heuristic-item .h-value {
+    font-size: 12px;
+    color: #fbbf24;
 }
 
 @keyframes pulse {
@@ -390,6 +451,12 @@ body {
         grid-column: 1;
         margin-bottom: 0;
     }
+
+    /* Heuristic table on desktop */
+    .heuristic-table {
+        grid-column: 1;
+        margin-bottom: 0;
+    }
     
     .controls-btn {
         grid-column: 1 / -1;
@@ -442,6 +509,19 @@ body {
         padding: 15px 25px;
         font-size: 16px;
     }
+    
+    /* Larger text sizes for A* cost displays on desktop */
+    .node text {
+        font-size: 14px;
+    }
+    
+    .node .cost-text {
+        font-size: 12px;
+    }
+    
+    .edge-cost {
+        font-size: 12px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -468,6 +548,11 @@ body {
     /* Ensure horizontal layout on mobile too */
     .config-row {
         gap: 10px;
+    }
+    
+    /* Heuristic grid responsive */
+    .heuristic-grid {
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
     }
 }
 
@@ -521,5 +606,23 @@ body {
         padding: 12px;
         font-size: 16px;
         min-width: 50px;
+    }
+    
+    /* Smaller heuristic grid on mobile */
+    .heuristic-grid {
+        grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+        gap: 8px;
+    }
+    
+    .heuristic-item {
+        padding: 6px;
+    }
+    
+    .heuristic-item .node-name {
+        font-size: 12px;
+    }
+    
+    .heuristic-item .h-value {
+        font-size: 10px;
     }
 }
